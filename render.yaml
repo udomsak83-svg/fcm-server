@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: fcm-server
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    plan: free
+    envVars:
+      - key: GOOGLE_SERVICE_ACCOUNT
+        sync: false
