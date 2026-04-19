@@ -58,4 +58,12 @@ app.post('/send-call', async (req, res) => {
 app.get('/health', (_, res) => res.json({ ok: true }));
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`FCM server running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`FCM server running on port ${PORT}`);
+  // Self-ping ทุก 10 นาที เพื่อป้องกัน Render.com free tier หลับ
+  setInterval(() => {
+    fetch(`http://localhost:${PORT}/health`)
+      .then(() => console.log('self-ping ok'))
+      .catch(() => {});
+  }, 10 * 60 * 1000);
+});
